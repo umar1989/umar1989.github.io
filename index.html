@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A. Umarmukthar – Physics Teacher</title>
+  <meta name="description" content="Online resume and portfolio">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="progress"></div>
+  <header class="nav no-print">
+    <a href="#top" class="brand" id="brand">Resume</a>
+    <nav id="links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#download">Download</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button id="theme" class="icon" aria-label="Toggle theme" title="Toggle theme (T)">◐</button>
+      <button id="menu" class="icon menu" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="about">
+      <div class="avatar" id="avatar"></div>
+      <div>
+        <p class="eyebrow">Hello, I'm</p>
+        <h1 id="name"></h1>
+        <h2 id="role"><span id="typed"></span><span class="cursor">|</span></h2>
+        <p id="summary" class="lead"></p>
+        <div class="row no-print">
+          <a class="btn primary" href="#download">Download resume</a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+        <div id="social" class="row social"></div>
+      </div>
+    </section>
+
+    <section id="stats" class="stats"></section>
+
+    <section id="skills">
+      <h2 class="sec">Skills</h2>
+      <div id="skillGroups"></div>
+    </section>
+
+    <section id="experience">
+      <h2 class="sec">Experience</h2>
+      <div id="timeline" class="timeline"></div>
+    </section>
+
+    <section id="projects">
+      <h2 class="sec">Projects</h2>
+      <div class="filters no-print" id="filters"></div>
+      <div id="projectGrid" class="grid"></div>
+    </section>
+
+    <section id="education">
+      <h2 class="sec">Education, Certifications &amp; Languages</h2>
+      <div id="edu" class="grid"></div>
+      <div id="langs" class="chips"></div>
+    </section>
+
+    <section id="download" class="no-print">
+      <h2 class="sec">Download my resume</h2>
+      <p class="muted">Generated from the same data as this page. Pick a format:</p>
+      <div class="dl" id="dl"></div>
+    </section>
+
+    <section id="contact" class="no-print">
+      <h2 class="sec">Contact</h2>
+      <div class="grid two">
+        <div class="card">
+          <p>Want to work together? Send me a message.</p>
+          <p><strong id="emailText"></strong>
+             <button class="btn small" id="copyEmail">Copy</button></p>
+          <p class="muted" id="loc"></p>
+          <div class="qr"><canvas id="qr" width="140" height="140" aria-label="QR code to this page"></canvas><span class="muted">Scan to open this page</span></div>
+        </div>
+        <form class="card" id="form">
+          <label>Your name <input name="n" required></label>
+          <label>Your email <input name="e" type="email" required></label>
+          <label>Message <textarea name="m" rows="4" required></textarea></label>
+          <button class="btn primary" type="submit">Send via email app</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="no-print"><span id="foot"></span> · <a href="#top">Back to top ↑</a></footer>
+  <div id="toast" role="status"></div>
+
+  <script src="resume-data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
