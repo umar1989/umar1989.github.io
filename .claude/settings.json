@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./publish.sh \"Update resume\" >/dev/null 2>&1 || true" }
+        ]
+      }
+    ]
+  }
+}
