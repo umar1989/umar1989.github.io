@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* Dark mode is a class on <html> (set by script.js, remembered per visitor). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------
+   THEME TOKENS - change the look of the whole site here.
+   Tailwind v4 is CSS-first: this @theme block is the config.
+   Colours below are the light palette; dark values follow.
+   --------------------------------------------------------------- */
+@theme {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+
+  --color-page: #f3f2ef;          /* page background */
+  --color-card: #ffffff;          /* card surface */
+  --color-ink: #191919;           /* main text */
+  --color-muted: #595959;         /* secondary text */
+  --color-line: #e0dfdc;          /* borders */
+  --color-brand: #0a66c2;         /* accent: links, buttons */
+  --color-brand-strong: #004182;  /* accent hover */
+  --color-brand-soft: #e8f1fa;    /* accent tint: tiles, hovers */
+  --color-on-brand: #ffffff;      /* text on accent */
+  --color-cover-a: #004182;       /* banner gradient */
+  --color-cover-b: #378fe9;
+
+  --radius-card: 0.75rem;
+  --container-page: 72rem;
+  --spacing: 0.25rem;             /* base spacing unit */
+}
+
+/* Dark palette: same token names, screen only (print is always light). */
+@media screen {
+  .dark {
+    color-scheme: dark;
+    --color-page: #14181c;
+    --color-card: #1f2428;
+    --color-ink: #ececec;
+    --color-muted: #aab3bb;
+    --color-line: #3a4249;
+    --color-brand: #71b7fb;
+    --color-brand-strong: #a7d3fd;
+    --color-brand-soft: #22384d;
+    --color-on-brand: #0b1a2a;
+    --color-cover-a: #0b2a4a;
+    --color-cover-b: #1f6bb5;
+  }
+}
+
+/* Small reusable components (v4 custom utilities). */
+@utility card {
+  @apply rounded-card border border-line bg-card p-4 sm:p-6
+    print:mb-3 print:rounded-none print:border-0 print:bg-transparent print:p-0;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-brand px-4 py-1.5 text-sm font-semibold text-brand
+    hover:bg-brand-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+}
+@utility btn-primary {
+  @apply btn bg-brand text-on-brand hover:bg-brand-strong hover:text-on-brand;
+}
+
+/* Print: conventional A4 resume. Cards, banner, sidebar and controls are
+   dropped with print: utilities in the markup; only page setup lives here. */
+@page { size: A4; margin: 14mm; }
+@media print {
+  html { font-size: 10pt; }
+  body { background: #fff; color: #000; }
+  a { color: inherit; text-decoration: none; }
+}

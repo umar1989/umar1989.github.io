@@ -1,167 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>A. Umarmukthar – Physics Teacher & Academic Leader</title>
-  <meta name="description" content="Résumé of A. Umarmukthar – Physics teacher, grade coordinator and curriculum developer." />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A. Umarmukthar - Physics Teacher · Grade Coordinator · Curriculum Developer</title>
+  <meta name="description" content="Physics educator with CBSE experience, Grade Coordinator and curriculum developer. M.Sc. Physics, B.Ed. Tiruppur, Tamil Nadu.">
+  <link rel="canonical" href="https://umarmukthar.in/">
+  <meta name="theme-color" content="#0a66c2">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="A. Umarmukthar">
+  <meta property="og:title" content="A. Umarmukthar - Physics Teacher · Grade Coordinator · Curriculum Developer">
+  <meta property="og:description" content="Physics educator with CBSE experience, Grade Coordinator and curriculum developer. M.Sc. Physics, B.Ed.">
+  <meta property="og:url" content="https://umarmukthar.in/">
+  <meta property="og:image" content="https://umarmukthar.in/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
   <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: { extend: { colors: { brand: { 50:"#eef5fb",100:"#d9e8f6",500:"#0a66c2",600:"#0958a5",700:"#084b8c" } } } },
-    };
-    // apply theme before paint
+    /* Apply the saved/system theme before first paint (no flash). */
     try {
-      const t = localStorage.getItem("theme");
+      var t = localStorage.getItem("theme");
       if (t === "dark" || (!t && matchMedia("(prefers-color-scheme: dark)").matches)) document.documentElement.classList.add("dark");
     } catch (e) {}
   </script>
-  <style>
-    @media print {
-      .no-print { display: none !important; }
-      body { background: #fff !important; }
-      .card { box-shadow: none !important; border: 1px solid #ddd !important; break-inside: avoid; }
-      .dark body, .dark .card { color: #111 !important; background: #fff !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-200 antialiased">
+<body class="min-h-screen bg-page font-sans text-ink antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2 print:hidden">Skip to content</a>
 
-  <!-- Role switcher -->
-  <nav class="no-print sticky top-0 z-20 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-800">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
-      <span class="text-sm font-medium text-slate-500 dark:text-slate-400">View as:</span>
-      <div id="roleButtons" class="flex flex-wrap gap-2"></div>
-      <div class="ml-auto flex items-center gap-2">
-        <button id="printBtn" class="text-sm px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">Save as PDF</button>
-        <button id="themeBtn" aria-label="Toggle dark mode" class="text-sm px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">🌓</button>
+  <header class="sticky top-0 z-30 border-b border-line bg-card print:hidden">
+    <div class="mx-auto flex h-14 max-w-page items-center gap-3 px-4">
+      <a href="#top" class="shrink-0 text-base font-semibold" id="bar-name"></a>
+      <nav aria-label="Sections" class="hidden min-w-0 flex-1 gap-1 overflow-x-auto md:flex" id="bar-links"></nav>
+      <div class="ml-auto flex shrink-0 items-center gap-2">
+        <button type="button" id="theme-btn" class="btn !px-2.5" aria-label="Toggle dark mode"></button>
+        <button type="button" id="pdf-btn" class="btn-primary"></button>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <main class="max-w-5xl mx-auto px-4 py-6 space-y-4" id="app"></main>
+  <div id="top" class="mx-auto grid max-w-page gap-4 px-0 py-4 sm:px-4 lg:grid-cols-[minmax(0,1fr)_20rem] print:block print:p-0">
+    <main id="main" class="min-w-0 space-y-4 print:space-y-0">
+      <noscript><p class="card">This profile needs JavaScript. Email: inbox@umarmukthar.in</p></noscript>
+      <div id="intro"></div>
+      <div id="switcher-mobile" class="lg:hidden print:hidden"></div>
+      <div id="sections" class="space-y-4 print:space-y-0"></div>
+    </main>
+    <aside id="sidebar" aria-label="Contact and links" class="min-w-0 space-y-4 print:hidden"></aside>
+  </div>
 
-  <footer class="no-print text-center text-xs text-slate-500 py-8">
-    Tip: share a tailored link such as <code>?role=principal&amp;for=Your%20School</code>
-  </footer>
+  <footer class="mx-auto max-w-page px-4 pb-8 text-center text-xs text-muted print:hidden" id="footer"></footer>
 
+  <script src="assets/qrcode.js"></script>
   <script src="data.js"></script>
-  <script>
-    const R = window.RESUME;
-    const $ = (s) => document.querySelector(s);
-    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
-    const params = new URLSearchParams(location.search);
-    const target = params.get("for");
-
-    let role = params.get("role") || (() => { try { return localStorage.getItem("role"); } catch (e) {} })() || R.defaultRole;
-    if (!R.roles[role]) role = R.defaultRole;
-
-    // item visible in this role? (no "for" = always)
-    const show = (x) => !x.for || x.for.includes(role);
-    // items tagged for this role sort first
-    const rank = (x) => (x.for && x.for.includes(role) ? 0 : 1);
-    const initials = R.name.replace(/^[A-Z]\.\s*/, "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
-
-    const card = (title, body, id) => `
-      <section id="${id}" class="card bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
-        <h2 class="text-xl font-semibold mb-4">${title}</h2>${body}
-      </section>`;
-
-    const sections = {
-      experience() {
-        const html = R.experience.map((e, i) => {
-          let bl = e.bullets.filter(show);
-          if (!bl.length) bl = e.bullets;
-          return `
-          <div class="flex gap-4 ${i ? "mt-6" : ""}">
-            <div class="mt-1 h-10 w-10 shrink-0 rounded-md bg-brand-50 dark:bg-slate-800 text-brand-600 grid place-items-center font-bold">${esc(e.org[0])}</div>
-            <div>
-              <h3 class="font-semibold leading-tight">${esc(e.title)}</h3>
-              <p class="text-sm">${esc(e.org)}</p>
-              <p class="text-sm text-slate-500 dark:text-slate-400">${esc(e.from)} – ${esc(e.to)} · ${esc(e.place)}</p>
-              <ul class="mt-2 list-disc ml-5 space-y-1 text-sm">${bl.map((b) => `<li>${esc(b.t)}</li>`).join("")}</ul>
-            </div>
-          </div>`;
-        }).join("");
-        return card("Experience", html, "experience");
-      },
-      skills() {
-        const list = R.skills.filter(show).sort((a, b) => rank(a) - rank(b));
-        const html = list.map((s) => `
-          <div class="mb-4 last:mb-0">
-            <h3 class="font-medium">${esc(s.name)}</h3>
-            <ul class="list-disc ml-5 text-sm space-y-0.5 mt-1">${s.items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>
-          </div>`).join("");
-        return card("Skills", html, "skills");
-      },
-      education() {
-        const html = R.education.filter(show).map((e) => `
-          <div class="flex justify-between gap-4 py-2 border-b last:border-0 border-slate-100 dark:border-slate-800">
-            <div><h3 class="font-medium">${esc(e.degree)}</h3><p class="text-sm text-slate-500 dark:text-slate-400">${esc(e.school)}</p></div>
-            <div class="text-right text-sm shrink-0"><div>${esc(e.year)}</div><div class="text-slate-500 dark:text-slate-400">${esc(e.score || "")}</div></div>
-          </div>`).join("");
-        return card("Education", html, "education");
-      },
-      achievements() {
-        const list = R.achievements.filter(show).sort((a, b) => rank(a) - rank(b));
-        if (!list.length) return "";
-        const html = list.map((a) => `<div class="py-1"><span class="font-medium">${esc(a.title)}</span> <span class="text-sm text-slate-500 dark:text-slate-400">– ${esc(a.detail)}</span></div>`).join("");
-        return card("Certifications & Achievements", html, "achievements");
-      },
-      languages() {
-        const html = R.languages.map((l) => `<div class="flex justify-between py-1"><span class="font-medium">${esc(l.name)}</span><span class="text-sm text-slate-500 dark:text-slate-400">${esc(l.level)}</span></div>`).join("");
-        const refs = (R.references || []).map((r) => `<div class="py-1"><span class="font-medium">${esc(r.name)}</span> <span class="text-sm text-slate-500 dark:text-slate-400">– ${esc(r.role)} · ${esc(r.contact || "")}</span></div>`).join("");
-        return card("Languages", html, "languages") + (refs ? card("References", refs, "references") : "");
-      },
-    };
-
-    function render() {
-      const cfg = R.roles[role];
-      const links = [
-        R.email && `<a class="hover:underline" href="mailto:${esc(R.email)}">✉ ${esc(R.email)}</a>`,
-        R.phone && `<a class="hover:underline" href="tel:${esc(R.phone.replace(/\s/g, ""))}">☎ ${esc(R.phone)}</a>`,
-        ...(R.links || []).map((l) => `<a class="hover:underline" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`),
-      ].filter(Boolean).join('<span class="text-slate-300">·</span>');
-
-      const header = `
-        <section class="card bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
-          <div class="h-28 bg-gradient-to-r from-brand-700 to-sky-400"></div>
-          <div class="px-6 pb-6">
-            <div class="-mt-14 h-28 w-28 rounded-full border-4 border-white dark:border-slate-900 bg-brand-500 text-white grid place-items-center text-4xl font-bold">${esc(initials)}</div>
-            <h1 class="mt-3 text-2xl font-bold">${esc(R.name)}</h1>
-            <p class="text-lg">${esc(cfg.headline)}</p>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${esc(R.location)}</p>
-            <div class="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-sm text-brand-600 dark:text-sky-400">${links}</div>
-            ${target ? `<p class="mt-3 inline-block text-sm rounded-full bg-brand-50 dark:bg-slate-800 text-brand-700 dark:text-sky-300 px-3 py-1">Application for ${esc(target)}</p>` : ""}
-          </div>
-        </section>
-        ${card("About", `<p class="leading-relaxed">${esc(cfg.summary)}</p>`, "about")}`;
-
-      $("#app").innerHTML = header + cfg.sections.map((s) => (sections[s] ? sections[s]() : "")).join("");
-
-      $("#roleButtons").innerHTML = Object.entries(R.roles).map(([k, v]) => `
-        <button data-role="${esc(k)}" class="text-sm px-3 py-1.5 rounded-full border ${k === role
-          ? "bg-brand-600 border-brand-600 text-white"
-          : "border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"}">${esc(v.label)}</button>`).join("");
-
-      document.title = `${R.name} – ${cfg.label}`;
-    }
-
-    $("#roleButtons").addEventListener("click", (e) => {
-      const b = e.target.closest("[data-role]"); if (!b) return;
-      role = b.dataset.role;
-      try { localStorage.setItem("role", role); } catch (e) {}
-      params.set("role", role);
-      history.replaceState(null, "", "?" + params.toString());
-      render();
-    });
-    $("#printBtn").onclick = () => print();
-    $("#themeBtn").onclick = () => {
-      const d = document.documentElement.classList.toggle("dark");
-      try { localStorage.setItem("theme", d ? "dark" : "light"); } catch (e) {}
-    };
-    render();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
