@@ -251,7 +251,7 @@
     return '<section aria-labelledby="h-name" class="card overflow-hidden !p-0 max-sm:rounded-none print:!mb-2">' +
       banner(r) +
       '<div class="px-4 pb-5 sm:px-6 print:px-0 print:pb-0">' +
-      '<div class="-mt-14 mb-3 sm:-mt-20 print:hidden">' + avatar("size-28 sm:size-36") + "</div>" +
+      '<div class="relative z-10 -mt-14 mb-3 sm:-mt-20 print:hidden">' + avatar("size-28 sm:size-36") + "</div>" +
       '<h1 id="h-name" class="text-2xl font-semibold print:text-2xl">' + esc(P.name) + "</h1>" +
       '<p class="mt-1 text-base" id="headline">' + esc(r.headline) + "</p>" +
       '<p class="mt-2 flex items-center gap-1 text-sm text-muted">' + icon("pin", "size-4 print:hidden") + esc(P.location) + "</p>" +
