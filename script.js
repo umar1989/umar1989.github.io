@@ -246,6 +246,25 @@
       ? '<svg class="absolute inset-0 size-full" viewBox="0 0 800 160" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#fff" stroke-width="2" opacity=".22" aria-hidden="true">' + MOTIFS[b.motif]() + "</svg>" : "";
     return '<div class="relative h-28 overflow-hidden bg-linear-to-r from-cover-a to-cover-b sm:h-40 print:hidden" aria-hidden="true"' + style + ">" + art + "</div>";
   }
+  /* Video introduction: any YouTube link (watch, youtu.be, shorts, live, embed). Empty -> no card.
+     Click-to-play facade, so YouTube is only contacted for the thumbnail until the visitor presses play. */
+  function youtubeId(u) {
+    var m = String(u || "").match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/|v\/))([\w-]{11})(?![\w-])/);
+    return m ? m[1] : null;
+  }
+  function renderVideo(r) {
+    var url = r.video || P.videoIntro;
+    var id = youtubeId(url);
+    if (!id) return "";
+    var t = String(url).match(/[?&#](?:t|start)=(\d+)/);
+    return '<section aria-labelledby="h-video" class="card mt-3 overflow-hidden max-sm:rounded-none print:hidden">' +
+      '<h2 id="h-video" class="mb-3 text-xl font-semibold">Video introduction</h2>' +
+      '<button type="button" data-video="' + id + '"' + (t ? ' data-start="' + t[1] + '"' : "") +
+      ' class="group relative block aspect-video w-full overflow-hidden rounded-lg bg-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand" aria-label="Play video introduction">' +
+      '<img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="" loading="lazy" class="size-full object-cover opacity-90 group-hover:opacity-100">' +
+      '<span class="absolute inset-0 flex items-center justify-center"><span class="flex size-16 items-center justify-center rounded-full bg-black/70 text-white group-hover:bg-brand">' +
+      '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="ml-1 size-8"><path d="M8 5v14l11-7z"/></svg></span></span></button></section>';
+  }
   function renderIntro() {
     var r = R.roles[role];
     return '<section aria-labelledby="h-name" class="card overflow-hidden !p-0 max-sm:rounded-none print:!mb-2">' +
@@ -263,7 +282,7 @@
       (P.social || []).map(function (l) {
         return '<a class="btn !px-2.5" href="' + esc(l.url) + '" rel="noopener" aria-label="' + esc(l.label) + '" title="' + esc(l.label) + '">' + icon(l.icon) + "</a>";
       }).join("") +
-      "</div></div></section>";
+      "</div></div></section>" + renderVideo(r);
   }
 
   function renderSwitcher() {
@@ -355,6 +374,16 @@
   document.addEventListener("click", function (e) {
     var t = e.target.closest("button");
     if (!t) return;
+    if (t.dataset.video) {
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + t.dataset.video + "?autoplay=1&rel=0" + (t.dataset.start ? "&start=" + t.dataset.start : "");
+      f.title = "Video introduction";
+      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      f.allowFullscreen = true;
+      f.className = "aspect-video w-full rounded-lg";
+      t.replaceWith(f);
+      return;
+    }
     if (t.dataset.role) { setRole(t.dataset.role); return; }
     if (t.dataset.toggle) {
       var scope = t.dataset.toggle === "entry" ? t.parentElement : t.closest("section");

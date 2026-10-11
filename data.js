@@ -21,6 +21,7 @@ window.RESUME = {
     name: "A. Umarmukthar",
     initials: "AU",                         // shown in the avatar (no photo supplied)
     photo: "assets/image.jpeg",                              // e.g. "assets/photo.jpg" - when set, replaces the initials
+    videoIntro: "",                                // Fallback YouTube link used by any role whose own  video  is empty. "" everywhere = no video card.
     location: "Tiruppur, Tamil Nadu, India",
     email: "inbox@umarmukthar.in",
     phone: "+91 89032 18627",
@@ -186,6 +187,7 @@ window.RESUME = {
      pdf          the LaTeX-built PDF for this role (npm run pdf writes it)
      banner       { a, b, motif } gradient colours + pattern on the intro banner
                   motifs: orbits, waves, formulas, trajectory, grid, steps
+     video        YouTube link for this role's video introduction (empty -> profile.videoIntro, if any)
      aliases      other ?role= values that also work
      headline     line under the name
      about        3-4 line About text
@@ -200,6 +202,7 @@ window.RESUME = {
       label: "General profile",
       pdf: "assets/pdf/A-Umarmukthar-Resume.pdf",
       banner: { a: "#1e293b", b: "#64748b", motif: "orbits" },
+      video: "",                      // YouTube link for this role's video introduction ("" = use profile.videoIntro)
       headline: "Physics Teacher · Grade Coordinator · Curriculum Developer",
       about:
         "Experienced and dynamic Physics educator specializing in classes 9 and 10, with a robust background in the CBSE curriculum. " +
@@ -218,6 +221,7 @@ window.RESUME = {
       label: "TGT Physics / Physical Science",
       pdf: "assets/pdf/A-Umarmukthar-Resume-TGT-Physics.pdf",
       banner: { a: "#0f5132", b: "#3aa57a", motif: "waves" },
+      video: "",                      // YouTube link for this role's video introduction ("" = use profile.videoIntro)
       aliases: ["tgt-physics", "teacher"],
       headline: "Physics Teacher (TGT) · Classes 9-10 · CBSE · Practical, Concept-First Teaching",
       about:
@@ -237,6 +241,7 @@ window.RESUME = {
       label: "PGT Physics",
       pdf: "assets/pdf/A-Umarmukthar-Resume-PGT-Physics.pdf",
       banner: { a: "#2b2d7f", b: "#6a6fe0", motif: "formulas" },
+      video: "",                      // YouTube link for this role's video introduction ("" = use profile.videoIntro)
       aliases: ["pgt-physics"],
       headline: "Physics Teacher · CBSE Board and Competitive-Exam Preparation",
       about:
@@ -257,6 +262,7 @@ window.RESUME = {
       label: "IIT/NEET Foundation Coordinator",
       pdf: "assets/pdf/A-Umarmukthar-Resume-IIT-NEET-Foundation.pdf",
       banner: { a: "#9a3412", b: "#f59e0b", motif: "trajectory" },
+      video: "",                      // YouTube link for this role's video introduction ("" = use profile.videoIntro)
       aliases: ["iit", "neet", "iit-neet"],
       headline: "IIT Foundation Teacher & Programme Coordinator · Physics Faculty · Competitive-Exam Preparation",
       about:
@@ -275,6 +281,7 @@ window.RESUME = {
       label: "Academic Coordinator",
       pdf: "assets/pdf/A-Umarmukthar-Resume-Academic-Coordinator.pdf",
       banner: { a: "#0e5f66", b: "#2fb3ba", motif: "grid" },
+      video: "",                      // YouTube link for this role's video introduction ("" = use profile.videoIntro)
       aliases: ["academic", "academic-coordinator"],
       headline: "Physics Faculty & IIT Foundation Programme Coordinator · Former Grade Coordinator · Curriculum · Teacher Training",
       about:
@@ -293,6 +300,7 @@ window.RESUME = {
       label: "Vice Principal / Principal",
       pdf: "assets/pdf/A-Umarmukthar-Resume-Vice-Principal.pdf",
       banner: { a: "#6b1d2e", b: "#c0506b", motif: "steps" },
+      video: "",                      // YouTube link for this role's video introduction ("" = use profile.videoIntro)
       aliases: ["vp", "vice-principal", "head"],
       headline: "Educator & Academic Leader · Curriculum Development · Staff Training · Student Mentoring",
       about:
