@@ -192,10 +192,64 @@
       ? '<img src="' + esc(P.photo) + '" alt="' + esc(P.name) + '" class="' + size + ' rounded-full border-4 border-card object-cover">'
       : '<div role="img" aria-label="' + esc(P.name) + '" class="' + size + ' flex items-center justify-center rounded-full border-4 border-card bg-brand-soft text-4xl font-semibold text-brand">' + esc(P.initials) + "</div>";
   }
+  /* Role banner: gradient colours + a faint physics-themed SVG motif (website only). */
+  var MOTIFS = {
+    orbits: function () {
+      var o = "";
+      [0, 60, 120].forEach(function (a) { o += '<ellipse cx="650" cy="80" rx="130" ry="42" transform="rotate(' + a + ' 650 80)"/>'; });
+      [0, 60, 120].forEach(function (a) { o += '<ellipse cx="110" cy="70" rx="70" ry="24" transform="rotate(' + a + ' 110 70)"/>'; });
+      return o + '<circle cx="650" cy="80" r="7" fill="#fff"/><circle cx="110" cy="70" r="5" fill="#fff"/>';
+    },
+    waves: function () {
+      var o = "";
+      [[40, 18, 90], [80, 26, 130], [120, 14, 70]].forEach(function (w) {
+        var d = "M0 " + w[0];
+        for (var x = 4; x <= 800; x += 4) d += " L" + x + " " + (w[0] + w[1] * Math.sin(x / w[2] * 2 * Math.PI / 4)).toFixed(1);
+        o += '<path d="' + d + '"/>';
+      });
+      return o;
+    },
+    formulas: function () {
+      var f = [["F = ma", 30, 60, 26], ["E = mc²", 210, 120, 22], ["V = IR", 400, 50, 24], ["λ = h/p", 560, 118, 22],
+        ["∇·E = ρ/ε₀", 640, 48, 20], ["v = u + at", 90, 140, 18], ["ΔxΔp ≥ ħ/2", 330, 148, 16]];
+      return f.map(function (t) {
+        return '<text x="' + t[1] + '" y="' + t[2] + '" font-size="' + t[3] + '" fill="#fff" stroke="none" font-family="Georgia,serif" font-style="italic">' + t[0] + "</text>";
+      }).join("");
+    },
+    trajectory: function () {
+      var o = "";
+      [[30, 150, 190, -50, 350, 150], [120, 150, 280, 0, 440, 150], [430, 150, 590, -30, 750, 150], [500, 150, 640, 30, 780, 150]].forEach(function (p) {
+        o += '<path d="M' + p[0] + " " + p[1] + " Q" + p[2] + " " + p[3] + " " + p[4] + " " + p[5] + '" stroke-dasharray="6 7"/>' +
+          '<circle cx="' + (p[0] + p[4]) / 2 + '" cy="' + ((p[1] + p[5]) / 2 + p[3]) / 2 + '" r="6" fill="#fff"/>';
+      });
+      return o;
+    },
+    grid: function () {
+      var o = "";
+      for (var x = 0; x <= 800; x += 66) o += '<path d="M' + x + ' 0V160"/>';
+      for (var y = 0; y <= 160; y += 40) o += '<path d="M0 ' + y + "H800" + '"/>';
+      [[66, 40], [198, 80], [330, 0], [462, 120], [594, 40], [726, 80]].forEach(function (c) {
+        o += '<rect x="' + c[0] + '" y="' + c[1] + '" width="66" height="40" fill="#fff" fill-opacity=".35" stroke="none"/>';
+      });
+      return o;
+    },
+    steps: function () {
+      var o = "";
+      for (var i = 0; i < 8; i++) o += '<rect x="' + (330 + i * 56) + '" y="' + (150 - 18 * (i + 1)) + '" width="50" height="' + (18 * (i + 1) + 10) + '" fill="#fff" fill-opacity=".25"/>';
+      return o + '<path d="M330 130 L560 70 L760 18 M740 14 L764 16 L752 36"/>';
+    },
+  };
+  function banner(r) {
+    var b = r.banner || {}, hex = /^#[0-9a-f]{6}$/i;
+    var style = hex.test(b.a) && hex.test(b.b) ? ' style="--color-cover-a:' + b.a + ";--color-cover-b:" + b.b + '"' : "";
+    var art = MOTIFS[b.motif]
+      ? '<svg class="absolute inset-0 size-full" viewBox="0 0 800 160" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#fff" stroke-width="2" opacity=".22" aria-hidden="true">' + MOTIFS[b.motif]() + "</svg>" : "";
+    return '<div class="relative h-28 overflow-hidden bg-linear-to-r from-cover-a to-cover-b sm:h-40 print:hidden" aria-hidden="true"' + style + ">" + art + "</div>";
+  }
   function renderIntro() {
     var r = R.roles[role];
     return '<section aria-labelledby="h-name" class="card overflow-hidden !p-0 max-sm:rounded-none print:!mb-2">' +
-      '<div class="h-28 bg-linear-to-r from-cover-a to-cover-b sm:h-40 print:hidden" aria-hidden="true"></div>' +
+      banner(r) +
       '<div class="px-4 pb-5 sm:px-6 print:px-0 print:pb-0">' +
       '<div class="-mt-14 mb-3 sm:-mt-20 print:hidden">' + avatar("size-28 sm:size-36") + "</div>" +
       '<h1 id="h-name" class="text-2xl font-semibold print:text-2xl">' + esc(P.name) + "</h1>" +

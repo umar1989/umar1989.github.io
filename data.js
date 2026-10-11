@@ -67,6 +67,8 @@ window.RESUME = {
 
   /* ---------- Master list: experience bullets ---------- */
   bullets: [
+    { job: "samskar", text: "Teach Physics to classes 9 and 10.",
+      roles: { tgt: 1, pgt: 2, foundation: 2, coordinator: 3, principal: 3 } },
     { job: "samskar", text: "Teach Physics in the IIT/NEET foundation programme, run in partnership with Edos.",
       roles: { foundation: 1, pgt: 1, tgt: 2, coordinator: 2, principal: 3 } },
     { job: "samskar", text: "Coordinate the IIT/NEET programme alongside teaching.",
@@ -182,6 +184,8 @@ window.RESUME = {
      To add a role: copy one block, give it a new key (the ?role= value).
      label        name in the role switcher
      pdf          the LaTeX-built PDF for this role (npm run pdf writes it)
+     banner       { a, b, motif } gradient colours + pattern on the intro banner
+                  motifs: orbits, waves, formulas, trajectory, grid, steps
      aliases      other ?role= values that also work
      headline     line under the name
      about        3-4 line About text
@@ -195,6 +199,7 @@ window.RESUME = {
     default: {
       label: "General profile",
       pdf: "assets/pdf/A-Umarmukthar-Resume.pdf",
+      banner: { a: "#1e293b", b: "#64748b", motif: "orbits" },
       headline: "Physics Teacher · Grade Coordinator · Curriculum Developer",
       about:
         "Experienced and dynamic Physics educator specializing in classes 9 and 10, with a robust background in the CBSE curriculum. " +
@@ -212,6 +217,7 @@ window.RESUME = {
     tgt: {
       label: "TGT Physics / Physical Science",
       pdf: "assets/pdf/A-Umarmukthar-Resume-TGT-Physics.pdf",
+      banner: { a: "#0f5132", b: "#3aa57a", motif: "waves" },
       aliases: ["tgt-physics", "teacher"],
       headline: "Physics Teacher (TGT) · Classes 9-10 · CBSE · Practical, Concept-First Teaching",
       about:
@@ -230,6 +236,7 @@ window.RESUME = {
     pgt: {
       label: "PGT Physics",
       pdf: "assets/pdf/A-Umarmukthar-Resume-PGT-Physics.pdf",
+      banner: { a: "#2b2d7f", b: "#6a6fe0", motif: "formulas" },
       aliases: ["pgt-physics"],
       headline: "Physics Teacher · CBSE Board and Competitive-Exam Preparation",
       about:
@@ -249,6 +256,7 @@ window.RESUME = {
     foundation: {
       label: "IIT/NEET Foundation Coordinator",
       pdf: "assets/pdf/A-Umarmukthar-Resume-IIT-NEET-Foundation.pdf",
+      banner: { a: "#9a3412", b: "#f59e0b", motif: "trajectory" },
       aliases: ["iit", "neet", "iit-neet"],
       headline: "IIT Foundation Teacher & Programme Coordinator · Physics Faculty · Competitive-Exam Preparation",
       about:
@@ -266,6 +274,7 @@ window.RESUME = {
     coordinator: {
       label: "Academic Coordinator",
       pdf: "assets/pdf/A-Umarmukthar-Resume-Academic-Coordinator.pdf",
+      banner: { a: "#0e5f66", b: "#2fb3ba", motif: "grid" },
       aliases: ["academic", "academic-coordinator"],
       headline: "Physics Faculty & IIT Foundation Programme Coordinator · Former Grade Coordinator · Curriculum · Teacher Training",
       about:
@@ -283,6 +292,7 @@ window.RESUME = {
     principal: {
       label: "Vice Principal / Principal",
       pdf: "assets/pdf/A-Umarmukthar-Resume-Vice-Principal.pdf",
+      banner: { a: "#6b1d2e", b: "#c0506b", motif: "steps" },
       aliases: ["vp", "vice-principal", "head"],
       headline: "Educator & Academic Leader · Curriculum Development · Staff Training · Student Mentoring",
       about:
