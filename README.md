@@ -6,9 +6,9 @@ Plain static site: `index.html`, `script.js`, `data.js`, and one compiled, minif
 ## How roles work
 - `/` shows the general profile with a role switcher (sidebar on desktop, under the intro card on mobile).
 - `/?role=pgt` shows only that version, **with the switcher hidden**. Send schools these links.
-- Keys: `tgt`, `pgt`, `foundation`, `coordinator`, `principal`, `scrum` (aliases such as `?role=vp`, `?role=iit` also work).
+- Keys: `tgt`, `pgt`, `foundation`, `coordinator`, `principal` (aliases such as `?role=vp`, `?role=iit` also work).
 - Switching in the switcher updates the page and the URL without reloading.
-- **Download PDF** opens the browser print dialog (Save as PDF) using the A4 print stylesheet, for the selected role.
+- **Download PDF** downloads the LaTeX-built PDF for the selected role (`assets/pdf/`). **Print** opens the browser print dialog instead.
 
 ## Edit content
 Everything is in **`data.js`** (commented). Fixed facts (name, contact, education, certifications, jobs, dates)
@@ -21,6 +21,14 @@ A profile photo: put it in `assets/` and set `profile.photo` in `data.js`.
 1. In `data.js`, copy a block inside `roles` and give it a new key, `label`, `headline`, `about`, `sections` order and `skillGroups`.
 2. Add that key to the `roles` map of every bullet, skill and featured item that should appear for it.
 3. Done: it appears in the switcher and works at `?role=newkey`. Each job needs at least one bullet tagged for the role, or it shows with the title only.
+
+## Rebuild the PDFs
+One PDF per role is generated from `data.js` with LaTeX (needs `pdflatex`). Run it after any content change, then commit `assets/pdf/`.
+```
+npm run pdf              # all roles
+node tools/build-pdf.js pgt   # one role
+```
+The file name of each role's PDF is its `pdf:` field in `data.js`. Only `assets/pdf/*.pdf` is un-ignored; `resume.pdf` stays private.
 
 ## Rebuild the CSS
 Only needed after changing classes in `index.html`/`script.js` or the theme in `src/input.css`.

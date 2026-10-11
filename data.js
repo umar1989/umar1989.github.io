@@ -20,11 +20,17 @@ window.RESUME = {
   profile: {
     name: "A. Umarmukthar",
     initials: "AU",                         // shown in the avatar (no photo supplied)
-    photo: "",                              // e.g. "assets/photo.jpg" - when set, replaces the initials
+    photo: "assets/image.jpeg",                              // e.g. "assets/photo.jpg" - when set, replaces the initials
     location: "Tiruppur, Tamil Nadu, India",
     email: "inbox@umarmukthar.in",
     phone: "+91 89032 18627",
     whatsapp: "918903218627",               // digits only, with country code
+    social: [                               // icon = github | youtube | instagram | facebook
+      { label: "GitHub",    icon: "github",    url: "https://github.com/umar1989" },
+      { label: "YouTube",   icon: "youtube",   url: "https://www.youtube.com/@PhysicsNothingElse" },
+      { label: "Instagram", icon: "instagram", url: "https://www.instagram.com/umarphysics" },
+      { label: "Facebook",  icon: "facebook",  url: "https://www.facebook.com/umarphysicist" },
+    ],
     siteUrl: "https://umarmukthar.in/",     // used for canonical/Open Graph tags in index.html
     languages: [
       { name: "Tamil",   level: "Fluent (read, write, speak)" },
@@ -42,6 +48,7 @@ window.RESUME = {
   ],
 
   certifications: [
+    { title: "CTET Qualified (Central Teacher Eligibility Test)", issuer: "Central Board of Secondary Education (CBSE)" },
     { title: "NCC Certified - A, B and C", issuer: "National Cadet Corps" },
     { title: "Second place, inter-college chess competition", issuer: "Chess" },
   ],
@@ -51,7 +58,8 @@ window.RESUME = {
      `duration` is optional (the resume gives years only, so it is
      left out rather than guessed) - add e.g. duration: "2 yrs" if you want it. */
   jobs: [
-    { id: "royal",  title: "Physics Faculty & IIT Foundation Teacher", org: "Royal International School",          place: "Komarapalayam, Tamil Nadu", from: "2023", to: "Present" },
+    { id: "samskar", title: "IIT Physics Foundation Teacher & IIT Coordinator", org: "Samskar Abraham High School",  place: "Gadwal, Telangana",         from: "May 2026", to: "Present" },
+    { id: "royal",  title: "Physics Faculty & IIT Foundation Teacher", org: "Royal International School",          place: "Komarapalayam, Tamil Nadu", from: "2023", to: "2025" },
     { id: "apple",  title: "Physics Faculty",                          org: "Apple Perks International School",    place: "Kolathur, Tamil Nadu",      from: "2022", to: "2023" },
     { id: "viv",    title: "Physics Faculty",                          org: "Vivekanandam Vidyashram CBSE School", place: "Thiruvarur, Tamil Nadu",    from: "2019", to: "2021" },
     { id: "nr",     title: "Physics Faculty & Grade Coordinator",      org: "NR Public School",                    place: "Udayarpalayam, Tamil Nadu", from: "2017", to: "2019" },
@@ -59,27 +67,32 @@ window.RESUME = {
 
   /* ---------- Master list: experience bullets ---------- */
   bullets: [
-    { job: "royal", text: "Specialize in teaching Physics to classes 9 and 10, aligning lessons with CBSE standards.",
+    { job: "samskar", text: "Teach Physics in the IIT/NEET foundation programme, run in partnership with Edos.",
+      roles: { foundation: 1, pgt: 1, tgt: 2, coordinator: 2, principal: 3 } },
+    { job: "samskar", text: "Coordinate the IIT/NEET programme alongside teaching.",
+      roles: { foundation: 1, coordinator: 1, principal: 1, pgt: 3 } },
+
+    { job: "royal", text: "Specialized in teaching Physics to classes 9 and 10, aligning lessons with CBSE standards.",
       roles: { tgt: 1, pgt: 2, foundation: 2, coordinator: 2, principal: 2 } },
-    { job: "royal", text: "Implement interactive learning strategies and continuous assessments to monitor student progress.",
-      roles: { tgt: 1, pgt: 1, foundation: 1, coordinator: 1, principal: 2, scrum: 2 } },
-    { job: "royal", text: "Enhance student interest and understanding through practical demonstrations and real-life applications.",
+    { job: "royal", text: "Implemented interactive learning strategies and continuous assessments to monitor student progress.",
+      roles: { tgt: 1, pgt: 1, foundation: 1, coordinator: 1, principal: 2 } },
+    { job: "royal", text: "Enhanced student interest and understanding through practical demonstrations and real-life applications.",
       roles: { tgt: 1, pgt: 1, foundation: 2 } },
 
     { job: "apple", text: "Provided targeted instruction in Physics, significantly improving students' performance in competitive exams.",
       roles: { tgt: 2, pgt: 1, foundation: 1, coordinator: 2, principal: 2 } },
     { job: "apple", text: "Developed and utilized digital resources to facilitate a more engaging learning environment.",
-      roles: { tgt: 2, pgt: 2, coordinator: 2, scrum: 2 } },
+      roles: { tgt: 2, pgt: 2, coordinator: 2 } },
 
     { job: "viv",   text: "Led initiatives for curriculum enhancement that resulted in higher student engagement and improved exam scores.",
-      roles: { tgt: 2, pgt: 2, foundation: 1, coordinator: 1, principal: 1, scrum: 2 } },
+      roles: { tgt: 2, pgt: 2, foundation: 1, coordinator: 1, principal: 1 } },
     { job: "viv",   text: "Mentored students in preparation for national-level science competitions, achieving several accolades.",
       roles: { tgt: 2, pgt: 1, foundation: 1, coordinator: 2, principal: 2 } },
 
     { job: "nr",    text: "Orchestrated the development and implementation of innovative curriculum strategies.",
-      roles: { foundation: 2, coordinator: 1, principal: 1, scrum: 2 } },
+      roles: { pgt: 2, foundation: 2, coordinator: 1, principal: 1 } },
     { job: "nr",    text: "Conducted workshops and training sessions for fellow teachers on effective teaching techniques.",
-      roles: { foundation: 2, coordinator: 1, principal: 1, scrum: 1 } },
+      roles: { pgt: 2, foundation: 2, coordinator: 1, principal: 1 } },
   ],
 
   /* ---------- Master list: skills ---------- */
@@ -95,37 +108,49 @@ window.RESUME = {
       roles: { tgt: 1, pgt: 2, foundation: 3 } },
     { id: "assess",    name: "Continuous Assessment",
       desc: "Interactive learning strategies and assessments to monitor student progress.",
-      roles: { tgt: 2, pgt: 2, foundation: 2, coordinator: 1, principal: 2, scrum: { p: 3, name: "Progress Tracking" } } },
+      roles: { tgt: 2, pgt: 2, foundation: 2, coordinator: 1, principal: 2 } },
     { id: "found",     name: "IIT Foundation Teaching",
-      desc: "Physics Faculty & IIT Foundation Teacher, Royal International School (2023 - present).",
+      desc: "IIT Physics Foundation Teacher & IIT Coordinator, Samskar Abraham High School (2026 - present); earlier Royal International School (2023 - 2025).",
       roles: { pgt: 3, foundation: 1 } },
     { id: "comp",      name: "Competition Mentoring",
       desc: "Mentored students for national-level science competitions, achieving several accolades.",
       roles: { tgt: 3, pgt: 2, foundation: 1, principal: 3 } },
     { id: "curr",      name: "Curriculum Development",
       desc: "Designs and updates curriculum to meet changing educational standards and student needs.",
-      roles: { tgt: 3, pgt: 3, foundation: 2, coordinator: 1, principal: 1, scrum: 2 } },
+      roles: { tgt: 3, pgt: 3, foundation: 2, coordinator: 1, principal: 1 } },
     { id: "train",     name: "Teacher Training",
       desc: "Conducted workshops and training sessions for fellow teachers.",
-      roles: { foundation: 3, coordinator: 1, principal: 1, scrum: { p: 1, name: "Workshop Facilitation" } } },
+      roles: { foundation: 3, coordinator: 1, principal: 1 } },
     { id: "grade",     name: "Grade Coordination",
       desc: "Grade Coordinator, NR Public School (2017 - 2019).",
-      roles: { coordinator: 1, principal: 1, scrum: 1 } },
+      roles: { coordinator: 1, principal: 1 } },
     { id: "mentor",    name: "Student Mentorship",
       desc: "Guides students through academic and personal development.",
-      roles: { tgt: 1, pgt: 3, foundation: 3, coordinator: 2, principal: 2, scrum: 3 } },
+      roles: { tgt: 1, pgt: 3, foundation: 3, coordinator: 2, principal: 2 } },
     { id: "remedial",  name: "Remedial Classes",
       desc: "Experience organising remedial classes for students requiring additional support.",
       roles: { tgt: 2, coordinator: 3, principal: 3 } },
+    { id: "timetable", name: "Timetable Planning (aSc TimeTables)",
+      desc: "Builds school and programme timetables using aSc TimeTables software.",
+      roles: { coordinator: 1, principal: 2, foundation: 3 } },
+    { id: "plans",     name: "Year Plan & Month Plan",
+      desc: "Prepares academic year plans and month-wise plans so teaching is paced and followed through.",
+      roles: { coordinator: 1, principal: 2, foundation: 2, pgt: 3, tgt: 3 } },
+    { id: "followup",  name: "Planning, Completion & Follow-up",
+      desc: "Plans work, sees it through to completion and follows up to deliver the result.",
+      roles: { principal: 1, coordinator: 2, foundation: 3 } },
+    { id: "ai",        name: "AI-assisted Teaching & Planning",
+      desc: "Uses AI for lesson and year/month plans, question papers and tests, explaining concepts and clearing doubts, and analysing results and progress.",
+      roles: { tgt: 3, pgt: 3, foundation: 3, coordinator: 3, principal: 3 } },
     { id: "tech",      name: "Technology Integration",
       desc: "Incorporates technology and digital resources into the classroom to enhance learning.",
-      roles: { tgt: 3, pgt: 3, coordinator: 3, principal: 3, scrum: 3 } },
+      roles: { tgt: 3, pgt: 3, coordinator: 3, principal: 3 } },
   ],
 
   /* ---------- Master list: Featured (top 3 per role are shown) ---------- */
   featured: [
     { id: "found",    title: "IIT Foundation Teacher",
-      text: "Physics Faculty & IIT Foundation Teacher at Royal International School, 2023 - present.",
+      text: "IIT Physics Foundation Teacher & IIT Coordinator at Samskar Abraham High School, 2026 - present; earlier at Royal International School, 2023 - 2025.",
       roles: { foundation: 1, pgt: 3, tgt: 3 } },
     { id: "comp",     title: "National-level science competitions",
       text: "Mentored students for national-level science competitions, achieving several accolades. Vivekanandam Vidyashram CBSE School, 2019 - 2021.",
@@ -135,13 +160,13 @@ window.RESUME = {
       roles: { tgt: 1, pgt: 2, foundation: 3 } },
     { id: "grade",    title: "Grade Coordinator",
       text: "Physics Faculty & Grade Coordinator, NR Public School, 2017 - 2019.",
-      roles: { coordinator: 1, principal: 1, scrum: 1 } },
+      roles: { coordinator: 1, principal: 1 } },
     { id: "workshop", title: "Teacher-training workshops",
       text: "Conducted workshops and training sessions for fellow teachers on effective teaching techniques.",
-      roles: { coordinator: 2, principal: 2, scrum: 2 } },
+      roles: { coordinator: 2, principal: 2 } },
     { id: "curr",     title: "Curriculum enhancement",
       text: "Led curriculum-enhancement initiatives that resulted in higher student engagement and improved exam scores.",
-      roles: { coordinator: 3, principal: 3, scrum: 3, foundation: 4 } },
+      roles: { coordinator: 3, principal: 3, foundation: 4 } },
     { id: "ncc",      title: "NCC A, B and C certified",
       text: "National Cadet Corps certifications at all three levels.",
       roles: { principal: 4 } },
@@ -156,6 +181,7 @@ window.RESUME = {
   /* ---------- Per-role configuration ----------
      To add a role: copy one block, give it a new key (the ?role= value).
      label        name in the role switcher
+     pdf          the LaTeX-built PDF for this role (npm run pdf writes it)
      aliases      other ?role= values that also work
      headline     line under the name
      about        3-4 line About text
@@ -168,6 +194,7 @@ window.RESUME = {
   roles: {
     default: {
       label: "General profile",
+      pdf: "assets/pdf/A-Umarmukthar-Resume.pdf",
       headline: "Physics Teacher · Grade Coordinator · Curriculum Developer",
       about:
         "Experienced and dynamic Physics educator specializing in classes 9 and 10, with a robust background in the CBSE curriculum. " +
@@ -177,105 +204,98 @@ window.RESUME = {
       showAll: true,
       skillGroups: [
         { title: "Teaching",    ids: ["physics", "exam", "practical", "found", "assess"] },
-        { title: "Leadership",  ids: ["curr", "train", "grade", "comp"] },
-        { title: "Student support", ids: ["mentor", "remedial", "tech"] },
+        { title: "Leadership",  ids: ["curr", "train", "grade", "comp", "plans", "timetable", "followup"] },
+        { title: "Student support", ids: ["mentor", "remedial", "tech", "ai"] },
       ],
     },
 
     tgt: {
       label: "TGT Physics / Physical Science",
+      pdf: "assets/pdf/A-Umarmukthar-Resume-TGT-Physics.pdf",
       aliases: ["tgt-physics", "teacher"],
       headline: "Physics Teacher (TGT) · Classes 9-10 · CBSE · Practical, Concept-First Teaching",
       about:
         "Physics teacher working in CBSE schools since 2017, currently teaching classes 9 and 10. " +
         "I teach through practical demonstrations and real-life applications so students understand the concept before the formula. " +
         "Continuous assessment lets me track progress and support students who need extra help. " +
-        "M.Sc. Physics and B.Ed. Physical Science.",
+        "CTET qualified. M.Sc. Physics and B.Ed. Physical Science.",
       sections: ["about", "featured", "experience", "skills", "education", "certifications", "projects"],
       skillGroups: [
-        { title: "Classroom teaching",  ids: ["physics", "practical", "exam"] },
+        { title: "Classroom teaching", ids: ["physics", "practical", "exam"] },
         { title: "Assessment & support", ids: ["assess", "remedial", "mentor"] },
-        { title: "Beyond the syllabus", ids: ["comp", "curr", "tech"] },
+        { title: "Beyond the syllabus", ids: ["comp", "curr", "plans", "tech", "ai"] },
       ],
     },
 
     pgt: {
       label: "PGT Physics",
+      pdf: "assets/pdf/A-Umarmukthar-Resume-PGT-Physics.pdf",
       aliases: ["pgt-physics"],
       headline: "Physics Teacher · CBSE Board and Competitive-Exam Preparation",
       about:
-        "M.Sc. Physics and B.Ed. graduate who has taught Physics in four schools since 2017. " +
+        "M.Sc. Physics and B.Ed. graduate who has taught Physics in CBSE schools since 2017, and is now preparing to handle classes 11 and 12. " +
         "I have prepared students for CBSE board examinations and competitive tests, and mentored them for national-level science competitions. " +
-        "My focus is conceptual clarity and problem-solving, backed by practical demonstration and continuous assessment.",
+        "My focus is conceptual clarity and problem-solving, backed by practical demonstration and continuous assessment. " +
+        "Each programme begins with mathematical physics, which takes at least a month; once students are comfortable with it, understanding physics becomes easier for them. " +
+        "Available to join as a PGT Physics teacher from 2028.",
       sections: ["about", "featured", "experience", "skills", "education", "certifications", "projects"],
       skillGroups: [
         { title: "Exam preparation", ids: ["exam", "found", "comp"] },
         { title: "Teaching",         ids: ["physics", "practical", "assess"] },
-        { title: "Support",          ids: ["mentor", "curr", "tech"] },
+        { title: "Support",          ids: ["mentor", "curr", "plans", "tech", "ai"] },
       ],
     },
 
     foundation: {
       label: "IIT/NEET Foundation Coordinator",
+      pdf: "assets/pdf/A-Umarmukthar-Resume-IIT-NEET-Foundation.pdf",
       aliases: ["iit", "neet", "iit-neet"],
-      headline: "Physics Faculty & IIT Foundation Teacher · Competitive-Exam Preparation",
+      headline: "IIT Foundation Teacher & Programme Coordinator · Physics Faculty · Competitive-Exam Preparation",
       about:
-        "I currently teach as Physics Faculty & IIT Foundation Teacher at Royal International School. " +
+        "I currently work at Samskar Abraham High School, Gadwal, as IIT Physics Foundation Teacher and IIT Coordinator, in an IIT/NEET programme run in partnership with Edos. " +
         "My earlier instruction significantly improved students' competitive-exam performance, and I have mentored students for national-level science competitions with several accolades. " +
         "I build teaching around conceptual depth and problem-solving, with continuous assessment to track progress.",
       sections: ["about", "featured", "experience", "skills", "education", "certifications", "projects"],
       skillGroups: [
         { title: "Foundation & exam preparation", ids: ["found", "exam", "comp"] },
         { title: "Teaching",                      ids: ["physics", "assess", "practical"] },
-        { title: "Programme building",            ids: ["curr", "train", "mentor"] },
+        { title: "Programme building",            ids: ["curr", "plans", "timetable", "followup", "train", "mentor", "ai"] },
       ],
     },
 
     coordinator: {
       label: "Academic Coordinator",
+      pdf: "assets/pdf/A-Umarmukthar-Resume-Academic-Coordinator.pdf",
       aliases: ["academic", "academic-coordinator"],
-      headline: "Physics Faculty & Grade Coordinator · Curriculum · Teacher Training",
+      headline: "Physics Faculty & IIT Foundation Programme Coordinator · Former Grade Coordinator · Curriculum · Teacher Training",
       about:
-        "Physics educator who served as Grade Coordinator at NR Public School. " +
+        "Physics educator who served as Grade Coordinator at NR Public School and currently coordinates the IIT/NEET programme at Samskar Abraham High School, Gadwal. " +
         "I developed curriculum strategies, conducted workshops and training sessions for fellow teachers, and led curriculum-enhancement initiatives that raised student engagement and exam scores. " +
         "I use continuous assessment to track student progress.",
       sections: ["about", "featured", "experience", "skills", "certifications", "education", "projects"],
       skillGroups: [
-        { title: "Academic coordination", ids: ["grade", "curr", "assess"] },
+        { title: "Academic coordination", ids: ["timetable", "plans", "followup", "grade", "curr", "assess"] },
         { title: "Staff development",     ids: ["train"] },
-        { title: "Teaching & student support", ids: ["physics", "exam", "mentor", "remedial", "tech"] },
+        { title: "Teaching & student support", ids: ["physics", "exam", "mentor", "remedial", "tech", "ai"] },
       ],
     },
 
     principal: {
       label: "Vice Principal / Principal",
+      pdf: "assets/pdf/A-Umarmukthar-Resume-Vice-Principal.pdf",
       aliases: ["vp", "vice-principal", "head"],
       headline: "Educator & Academic Leader · Curriculum Development · Staff Training · Student Mentoring",
       about:
-        "Physics educator with experience in four CBSE and matriculation-board schools, including a Grade Coordinator post. " +
+        "Physics educator with experience in CBSE and matriculation-board schools, including a Grade Coordinator post and, currently, coordination of the IIT/NEET programme at Samskar Abraham High School, Gadwal. " +
         "My leadership experience is in curriculum development, training fellow teachers and mentoring students. " +
-        "NCC A, B and C certified. M.Sc. Physics and B.Ed. Physical Science.",
+        "CTET qualified. NCC A, B and C certified. M.Sc. Physics and B.Ed. Physical Science.",
       sections: ["about", "featured", "experience", "skills", "certifications", "education", "projects"],
       skillGroups: [
-        { title: "Academic leadership", ids: ["grade", "curr", "train"] },
+        { title: "Academic leadership", ids: ["followup", "timetable", "plans", "grade", "curr", "train"] },
         { title: "Teaching quality",    ids: ["assess", "physics", "exam"] },
-        { title: "Students",            ids: ["mentor", "comp", "remedial", "tech"] },
+        { title: "Students",            ids: ["mentor", "comp", "remedial", "tech", "ai"] },
       ],
     },
 
-    scrum: {
-      label: "Scrum Master / Project Manager",
-      aliases: ["pm", "project-manager", "scrum-master"],
-      headline: "Educator & Grade Coordinator · Workshop Facilitation · Progress Tracking",
-      about:
-        "Teacher and former Grade Coordinator experienced in running workshops and training sessions for colleagues and tracking progress through continuous assessment. " +
-        "I have led curriculum initiatives that resulted in higher engagement and improved exam scores, and developed and used digital resources for a more engaging learning environment.",
-      sections: ["about", "featured", "experience", "skills", "certifications", "education", "projects"],
-      skillGroups: [
-        { title: "Facilitation & coordination", ids: ["train", "grade"] },
-        { title: "Delivery & improvement",      ids: ["curr", "assess", "tech"] },
-        { title: "People",                      ids: ["mentor"] },
-      ],
-    },
   },
 };

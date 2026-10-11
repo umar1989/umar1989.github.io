@@ -1,4 +1,5 @@
 # PDFs contain home address and reference phone number – keep them off the public repo
 *.pdf
+!assets/pdf/*.pdf
 .claude/settings.local.json
 node_modules/

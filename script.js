@@ -32,6 +32,13 @@
     moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',
     pin: '<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+    github: '<path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.800-.3 5.500-1.400 5.500-6a4.600 4.600 0 0 0-1.300-3.200 4.200 4.200 0 0 0-.1-3.200s-1.100-.3-3.500 1.300a12 12 0 0 0-6.200 0C6.500 2.800 5.400 3.100 5.400 3.100a4.200 4.200 0 0 0-.1 3.200A4.600 4.600 0 0 0 4 9.500c0 4.600 2.700 5.700 5.500 6-.6.600-.6 1.200-.5 2V21"/>',
+    youtube: '<rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/>',
+    instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.500 6.500h.01"/>',
+    facebook: '<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>',
+    menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    close: '<path d="M6 6l12 12M18 6 6 18"/>',
+    print: '<path d="M7 9V4h10v5M7 17H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2"/><rect x="7" y="14" width="10" height="6"/>',
     copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
   };
   var icon = function (n, cls) {
@@ -92,7 +99,9 @@
       return '<li class="rounded-lg border border-line p-3"><h3 class="font-semibold">' + esc(x.item.title) +
         '</h3><p class="mt-1 text-sm text-muted">' + esc(x.item.text) + "</p></li>";
     }).join("");
-    return sectionWrap("featured", '<ul class="grid gap-3 md:grid-cols-' + Math.min(items.length, 3) + '">' + cards + "</ul>", "print:hidden");
+    /* literal class names so the Tailwind scanner sees them */
+    var cols = ["", "md:grid-cols-1", "md:grid-cols-2", "md:grid-cols-3"][Math.min(items.length, 3)];
+    return sectionWrap("featured", '<ul class="grid gap-3 ' + cols + '">' + cards + "</ul>", "print:hidden");
   }
 
   function renderExperience() {
@@ -197,6 +206,9 @@
       '<a class="btn-primary" href="mailto:' + esc(P.email) + '">' + icon("mail") + "Email</a>" +
       '<a class="btn" href="tel:+' + esc(P.phone.replace(/\D/g, "")) + '">' + icon("phone") + "Call</a>" +
       '<a class="btn" href="https://wa.me/' + esc(P.whatsapp) + '" rel="noopener">' + icon("chat") + "WhatsApp</a>" +
+      (P.social || []).map(function (l) {
+        return '<a class="btn !px-2.5" href="' + esc(l.url) + '" rel="noopener" aria-label="' + esc(l.label) + '" title="' + esc(l.label) + '">' + icon(l.icon) + "</a>";
+      }).join("") +
       "</div></div></section>";
   }
 
@@ -219,6 +231,9 @@
     var contact = '<section aria-labelledby="h-contact" class="card"><h2 id="h-contact" class="mb-3 text-base font-semibold">Contact</h2><ul class="space-y-2">' +
       row("mail", "Email", P.email, "mailto:" + P.email) +
       row("phone", "Phone", P.phone, "tel:+" + P.phone.replace(/\D/g, "")) +
+      (P.social || []).map(function (l) {
+        return row(l.icon, l.label, l.url.replace(/^https?:\/\/(www\.)?/, ""), l.url);
+      }).join("") +
       row("pin", "Location", P.location) + "</ul></section>";
     var langs = '<section aria-labelledby="h-lang" class="card"><h2 id="h-lang" class="mb-3 text-base font-semibold">Languages</h2><ul class="space-y-2">' +
       P.languages.map(function (l) { return '<li class="text-sm"><span class="font-semibold">' + esc(l.name) + '</span><br><span class="text-muted">' + esc(l.level) + "</span></li>"; }).join("") + "</ul></section>";
@@ -246,6 +261,9 @@
     $("#bar-links").innerHTML = order.map(function (id) {
       return '<a href="#sec-' + id + '" class="whitespace-nowrap rounded-full px-3 py-1.5 text-sm text-muted hover:bg-brand-soft hover:text-brand">' + SECTION_NAV[id] + "</a>";
     }).join("");
+    $("#menu-panel").innerHTML = order.map(function (id) {
+      return '<a href="#sec-' + id + '" class="block rounded-md px-2 py-2.5 text-sm hover:bg-brand-soft hover:text-brand">' + SECTION_NAV[id] + "</a>";
+    }).join("");
   }
   function setMeta(sel, attr, val) { var el = $(sel); if (el) el.setAttribute(attr, val); }
   function updateHead() {
@@ -266,6 +284,7 @@
     $("#switcher-mobile").innerHTML = locked ? "" : renderSwitcher();
     $("#sidebar").innerHTML = renderSidebar();
     renderBar(present);
+    updatePdfLink();
     renderQR();
     updateHead();
   }
@@ -311,16 +330,22 @@
     setThemeIcon();
   });
 
-  /* "Download PDF" = browser print dialog -> Save as PDF, using the print stylesheet.
-     The document title becomes the suggested file name. */
+  /* "Download PDF" = the LaTeX-built file for the current role (npm run pdf).
+     "Print" = browser print dialog using the print stylesheet. */
   var savedTitle;
   window.addEventListener("beforeprint", function () {
     savedTitle = document.title;
     document.title = P.name + " - " + R.roles[role].label + " - Resume";
   });
   window.addEventListener("afterprint", function () { if (savedTitle) document.title = savedTitle; });
-  $("#pdf-btn").innerHTML = icon("download") + "<span>Download PDF</span>";
-  $("#pdf-btn").addEventListener("click", function () { window.print(); });
+  function updatePdfLink() {
+    var f = R.roles[role].pdf;
+    $("#pdf-btn").innerHTML = icon("download") + "<span>Download PDF</span>";
+    $("#pdf-btn").setAttribute("href", f || "#");
+    $("#pdf-btn").hidden = !f;
+  }
+  $("#print-btn").innerHTML = icon("print") + "<span>Print</span>";
+  $("#print-btn").addEventListener("click", function () { window.print(); });
 
   window.addEventListener("popstate", function () {   // back/forward through changed URLs
     var k = resolveRole(new URLSearchParams(location.search).get("role")) || R.defaultRole;
@@ -328,7 +353,19 @@
   });
 
   $("#bar-name").textContent = P.name;
-  $("#footer").textContent = "© " + new Date().getFullYear() + " " + P.name + ". Resume website - use Download PDF for a printable copy of this version.";
+  $("#footer").textContent = "© " + new Date().getFullYear() + " " + P.name + ". Resume website - use Download PDF for a copy of this version.";
   setThemeIcon();
+
+  /* mobile section menu */
+  function setMenu(open) {
+    $("#menu-panel").classList.toggle("hidden", !open);
+    $("#menu-btn").setAttribute("aria-expanded", open);
+    $("#menu-btn").setAttribute("aria-label", open ? "Close section menu" : "Open section menu");
+    $("#menu-btn").innerHTML = icon(open ? "close" : "menu");
+  }
+  $("#menu-btn").addEventListener("click", function () { setMenu($("#menu-btn").getAttribute("aria-expanded") !== "true"); });
+  $("#menu-panel").addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+  setMenu(false);
   render();
 })();

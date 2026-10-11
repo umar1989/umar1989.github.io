@@ -37,9 +37,12 @@
       <nav aria-label="Sections" class="hidden min-w-0 flex-1 gap-1 overflow-x-auto md:flex" id="bar-links"></nav>
       <div class="ml-auto flex shrink-0 items-center gap-2">
         <button type="button" id="theme-btn" class="btn !px-2.5" aria-label="Toggle dark mode"></button>
-        <button type="button" id="pdf-btn" class="btn-primary"></button>
+        <button type="button" id="print-btn" class="btn hidden sm:inline-flex" aria-label="Print this page"></button>
+        <a id="pdf-btn" class="btn-primary" href="#" download></a>
+        <button type="button" id="menu-btn" class="btn !px-2.5 md:hidden" aria-label="Open section menu" aria-expanded="false" aria-controls="menu-panel"></button>
       </div>
     </div>
+    <nav id="menu-panel" aria-label="Sections menu" class="hidden border-t border-line bg-card px-4 py-2 md:!hidden"></nav>
   </header>
 
   <div id="top" class="mx-auto grid max-w-page gap-4 px-0 py-4 sm:px-4 lg:grid-cols-[minmax(0,1fr)_20rem] print:block print:p-0">
