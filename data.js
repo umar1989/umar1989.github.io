@@ -39,7 +39,7 @@ window.RESUME = {
       availableFrom: "",                     // e.g. "June 2027"; only used when status is "Available after"
       noticePeriod: "60-90 days",
       formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSePuZnVvhFMuxq3Puvn_wE4Mj_xWqaCm1J8Tw8G6aE_xpjXLw/viewform",
-      calendarUrl: "",
+      calendarUrl: "https://calendar.google.com/calendar/u/0?cid=dW0udG4uaW5AZ21haWwuY29t",
     },
     siteUrl: "https://umarmukthar.in/",     // used for canonical/Open Graph tags in index.html
     languages: [
