@@ -17,6 +17,12 @@ JSON-LD `Person` data, `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, `404
 and the "Last updated" date. Run it after changing `data.js` or `index.html`, then commit the generated files.
 Send schools `https://umarmukthar.in/pgt/` (the `?role=pgt` links still work too).
 
+## Contact form and availability
+The sidebar shows an **Availability** card (job status, notice period) from `profile.availability` in `data.js`.
+To collect visitor details: paste `tools/create-form.gs` into https://script.google.com, run `createForm`, then put the
+form link in `availability.formUrl`. For the calendar, create a Google Calendar *appointment schedule* and put its share
+link in `availability.calendarUrl` (shows free slots without exposing event details). Then `npm run build` and publish.
+
 ## Edit content
 Everything is in **`data.js`** (commented). Fixed facts (name, contact, education, certifications, jobs, dates)
 are written once; bullets, skills, featured items and projects are in master lists, each with a

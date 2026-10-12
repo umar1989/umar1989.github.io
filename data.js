@@ -32,6 +32,15 @@ window.RESUME = {
       { label: "Instagram", icon: "instagram", url: "https://www.instagram.com/umarphysics" },
       { label: "Facebook",  icon: "facebook",  url: "https://www.facebook.com/umarphysicist" },
     ],
+    /* Shown in the sidebar "Availability" card. status: "Presently working" | "Looking for a job" | "Available after" (set availableFrom).
+       formUrl = Google Form link (tools/create-form.gs); calendarUrl = Google Calendar appointment-schedule link. "" hides that button. */
+    availability: {
+      status: "Presently working",
+      availableFrom: "",                     // e.g. "June 2027"; only used when status is "Available after"
+      noticePeriod: "60-90 days",
+      formUrl: "",
+      calendarUrl: "",
+    },
     siteUrl: "https://umarmukthar.in/",     // used for canonical/Open Graph tags in index.html
     languages: [
       { name: "Tamil",   level: "Fluent (read, write, speak)" },

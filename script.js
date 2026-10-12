@@ -39,6 +39,7 @@
     menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
     close: '<path d="M6 6l12 12M18 6 6 18"/>',
     print: '<path d="M7 9V4h10v5M7 17H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2"/><rect x="7" y="14" width="10" height="6"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4m8-4v4"/>',
     copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
   };
   var icon = function (n, cls) {
@@ -278,6 +279,8 @@
       '<h1 id="h-name" class="text-2xl font-semibold print:text-2xl">' + esc(P.name) + "</h1>" +
       '<p class="mt-1 text-base" id="headline">' + esc(r.headline) + "</p>" +
       '<p class="mt-2 flex items-center gap-1 text-sm text-muted">' + icon("pin", "size-4 print:hidden") + esc(P.location) + "</p>" +
+      (P.availability ? '<p class="mt-1 text-sm print:hidden"><span class="font-semibold">' + esc(P.availability.status === "Available after" && P.availability.availableFrom ? "Available after " + P.availability.availableFrom : P.availability.status) + "</span>" +
+        (P.availability.noticePeriod ? " · Notice period: " + esc(P.availability.noticePeriod) : "") + "</p>" : "") +
       '<p class="hidden text-sm print:block">' + esc(P.email) + " · " + esc(P.phone) + "</p>" +
       '<div class="mt-4 flex flex-wrap gap-2 print:hidden">' +
       '<a class="btn-primary" href="mailto:' + esc(P.email) + '">' + icon("mail") + "Email</a>" +
@@ -313,6 +316,17 @@
       }).join("") +
       row("pin", "Location", P.location) +
       row("download", "Save contact", "Save to contacts (.vcf)", BASE + "assets/umarmukthar.vcf") + "</ul></section>";
+    var av = P.availability, avail = "";
+    if (av) {
+      var st = av.status === "Available after" && av.availableFrom ? "Available after " + av.availableFrom : av.status;
+      avail = '<section aria-labelledby="h-avail" class="card"><h2 id="h-avail" class="mb-3 text-base font-semibold">Availability</h2>' +
+        '<dl class="space-y-2 text-sm"><div><dt class="text-muted">Job status</dt><dd class="font-semibold">' + esc(st) + "</dd></div>" +
+        (av.noticePeriod ? '<div><dt class="text-muted">Notice period</dt><dd class="font-semibold">' + esc(av.noticePeriod) + "</dd></div>" : "") + "</dl>" +
+        (av.formUrl || av.calendarUrl ? '<div class="mt-4 flex flex-col gap-2">' +
+          (av.formUrl ? '<a class="btn-primary" href="' + esc(av.formUrl) + '" rel="noopener">' + icon("mail") + "Contact form</a>" : "") +
+          (av.calendarUrl ? '<a class="btn" href="' + esc(av.calendarUrl) + '" rel="noopener">' + icon("calendar") + "Check my calendar</a>" : "") + "</div>" : "") +
+        "</section>";
+    }
     var langs = '<section aria-labelledby="h-lang" class="card"><h2 id="h-lang" class="mb-3 text-base font-semibold">Languages</h2><ul class="space-y-2">' +
       P.languages.map(function (l) { return '<li class="text-sm"><span class="font-semibold">' + esc(l.name) + '</span><br><span class="text-muted">' + esc(l.level) + "</span></li>"; }).join("") + "</ul></section>";
     var link = '<section aria-labelledby="h-link" class="card"><h2 id="h-link" class="mb-3 text-base font-semibold">Profile link</h2>' +
@@ -320,7 +334,7 @@
       '<button type="button" id="copy-btn" class="btn mt-3 w-full">' + icon("copy") + '<span>Copy link</span></button>' +
       '<div id="qr" class="mx-auto mt-4 size-40 rounded-lg bg-white p-2" role="img" aria-label="QR code for this profile link"></div>' +
       '<p class="mt-2 text-center text-xs text-muted">Scan to open this version</p></section>';
-    return contact + langs + (locked ? "" : '<div id="switcher-desktop" class="hidden lg:block">' + renderSwitcher() + "</div>") + link;
+    return avail + contact + langs + (locked ? "" : '<div id="switcher-desktop" class="hidden lg:block">' + renderSwitcher() + "</div>") + link;
   }
 
   /* ---------- page assembly ---------- */
