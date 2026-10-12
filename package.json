@@ -2,8 +2,9 @@
   "name": "resume-site",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i src/input.css -o assets/styles.css --minify",
+    "build": "node tools/build-site.js && tailwindcss -i src/input.css -o assets/styles.css --minify",
     "pdf": "node tools/build-pdf.js",
+    "site": "node tools/build-site.js",
     "watch": "tailwindcss -i src/input.css -o assets/styles.css --watch"
   },
   "devDependencies": {

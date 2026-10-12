@@ -20,7 +20,7 @@ window.RESUME = {
   profile: {
     name: "A. Umarmukthar",
     initials: "AU",                         // shown in the avatar (no photo supplied)
-    photo: "assets/image.jpeg",                              // e.g. "assets/photo.jpg" - when set, replaces the initials
+    photo: "assets/image.webp",                              // e.g. "assets/photo.jpg" - when set, replaces the initials
     videoIntro: "",                                // Fallback YouTube link used by any role whose own  video  is empty. "" everywhere = no video card.
     location: "Tiruppur, Tamil Nadu, India",
     email: "inbox@umarmukthar.in",

@@ -10,6 +10,13 @@ Plain static site: `index.html`, `script.js`, `data.js`, and one compiled, minif
 - Switching in the switcher updates the page and the URL without reloading.
 - **Download PDF** downloads the LaTeX-built PDF for the selected role (`assets/pdf/`). **Print** opens the browser print dialog instead.
 
+## Role landing pages, SEO and generated files
+`npm run site` (`tools/build-site.js`) pre-renders the page so crawlers and link previews see real content, and writes:
+`/pgt/`, `/tgt/`, `/foundation/`, `/coordinator/`, `/principal/` (own title, Open Graph tags, canonical, switcher hidden),
+JSON-LD `Person` data, `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, `404.html`, `assets/umarmukthar.vcf`
+and the "Last updated" date. Run it after changing `data.js` or `index.html`, then commit the generated files.
+Send schools `https://umarmukthar.in/pgt/` (the `?role=pgt` links still work too).
+
 ## Edit content
 Everything is in **`data.js`** (commented). Fixed facts (name, contact, education, certifications, jobs, dates)
 are written once; bullets, skills, featured items and projects are in master lists, each with a
@@ -48,6 +55,6 @@ Colours, fonts, radius and spacing are theme tokens at the top of `src/input.css
 4. Make sure `siteUrl` in `data.js` and the `canonical` / `og:url` / `og:image` URLs in `index.html` match your real domain.
 
 ## Notes
-- Link previews (WhatsApp etc.) read only the static tags in `index.html`, so every `?role=` link previews with the general headline.
+- Link previews (WhatsApp etc.) read only static tags, so use the role landing pages (`/pgt/` ...) for role-specific previews; `?role=` links preview with the general headline.
 - `resume.pdf` (home address, reference phone) is git-ignored and is not published.
 - The QR code library (`assets/qrcode.js`, MIT) is vendored so nothing loads from a CDN.
