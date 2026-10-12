@@ -4,7 +4,7 @@
    2. Optionally fill CALENDAR_URL below (Google Calendar -> Appointment schedule -> share link).
    3. Choose the function createForm in the toolbar and press Run (approve the permissions once).
    4. View -> Logs (or Execution log) prints the form link. Copy the "send to people" link into
-      data.js -> profile.availability.formUrl, then run: npm run build && ./publish.sh
+      data.js -> profile.availability.form (see README), then run: npm run build && ./publish.sh
    Responses land in the form's Responses tab; you also get an e-mail for each new submission. */
 
 var CALENDAR_URL = "";                 // optional: your Google Calendar appointment-page link

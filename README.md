@@ -20,7 +20,7 @@ Send schools `https://umarmukthar.in/pgt/` (the `?role=pgt` links still work too
 ## Contact form and availability
 The sidebar shows an **Availability** card (job status, notice period) from `profile.availability` in `data.js`.
 To collect visitor details: paste `tools/create-form.gs` into https://script.google.com, run `createForm`, then put the
-form link in `availability.formUrl`. For the calendar, create a Google Calendar *appointment schedule* and put its share
+`.../formResponse` address and its entry ids in `availability.form` (the page posts answers in the background, visitors never leave the site). For the calendar, create a Google Calendar *appointment schedule* and put its share
 link in `availability.calendarUrl` (shows free slots without exposing event details). Then `npm run build` and publish.
 
 ## Edit content

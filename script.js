@@ -322,8 +322,8 @@
       avail = '<section aria-labelledby="h-avail" class="card"><h2 id="h-avail" class="mb-3 text-base font-semibold">Availability</h2>' +
         '<dl class="space-y-2 text-sm"><div><dt class="text-muted">Job status</dt><dd class="font-semibold">' + esc(st) + "</dd></div>" +
         (av.noticePeriod ? '<div><dt class="text-muted">Notice period</dt><dd class="font-semibold">' + esc(av.noticePeriod) + "</dd></div>" : "") + "</dl>" +
-        (av.formUrl || av.calendarUrl ? '<div class="mt-4 flex flex-col gap-2">' +
-          (av.formUrl ? '<a class="btn-primary" href="' + esc(av.formUrl) + '" rel="noopener">' + icon("mail") + "Contact form</a>" : "") +
+        (av.form || av.calendarUrl ? '<div class="mt-4 flex flex-col gap-2">' +
+          (av.form && av.form.url ? '<a class="btn-primary" href="#contact">' + icon("mail") + "Send a message</a>" : "") +
           (av.calendarUrl ? '<a class="btn" href="' + esc(av.calendarUrl) + '" rel="noopener">' + icon("calendar") + "Check my calendar</a>" : "") + "</div>" : "") +
         "</section>";
     }
@@ -336,6 +336,74 @@
       '<p class="mt-2 text-center text-xs text-muted">Scan to open this version</p></section>';
     return avail + contact + langs + (locked ? "" : '<div id="switcher-desktop" class="hidden lg:block">' + renderSwitcher() + "</div>") + link;
   }
+
+  /* In-page contact form. Answers are posted in the background to the endpoint in data.js (availability.form). */
+  var POSITIONS = ["TGT Physics", "PGT Physics", "IIT/NEET Foundation Teacher", "Academic Coordinator", "Vice Principal / Head", "Other"];
+  var JOINING = ["Immediately", "Within 1 month", "Within 2-3 months", "Next academic year", "Not decided"];
+  var CONTACT_VIA = ["Email", "Phone call", "WhatsApp"];
+  var INPUT = "mt-1 w-full rounded-lg border border-line bg-card px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
+  function field(name, label, type, req, hint) {
+    return '<div><label class="text-sm font-semibold" for="cf-' + name + '">' + label + (req ? ' <span aria-hidden="true">*</span>' : "") + "</label>" +
+      (hint ? '<p class="text-xs text-muted">' + hint + "</p>" : "") +
+      '<input id="cf-' + name + '" name="' + name + '" type="' + type + '" class="' + INPUT + '"' + (req ? " required" : "") +
+      (type === "email" ? ' autocomplete="email"' : type === "tel" ? ' autocomplete="tel"' : name === "name" ? ' autocomplete="name"' : "") + "></div>";
+  }
+  function choices(name, label, type, list, req) {
+    return '<fieldset><legend class="text-sm font-semibold">' + label + (req ? ' <span aria-hidden="true">*</span>' : "") + '</legend><div class="mt-1 flex flex-wrap gap-x-4 gap-y-2">' +
+      list.map(function (o, i) {
+        return '<label class="flex items-center gap-2 text-sm"><input type="' + type + '" name="' + name + '" value="' + esc(o) + '"' +
+          (req && type === "radio" && i === 0 ? " required" : "") + ' class="size-4 accent-brand">' + esc(o) + "</label>";
+      }).join("") + "</div></fieldset>";
+  }
+  function renderContactForm() {
+    var f = P.availability && P.availability.form;
+    if (!f || !f.url) return "";
+    return '<section id="contact" aria-labelledby="h-contact-form" class="card scroll-mt-20 print:hidden">' +
+      '<h2 id="h-contact-form" class="text-xl font-semibold">Get in touch</h2>' +
+      '<p class="mb-4 mt-1 text-sm text-muted">Reviewing my profile for a vacancy? Leave your details and I will contact you.</p>' +
+      '<form id="contact-form" novalidate class="space-y-4">' +
+      '<div class="grid gap-4 sm:grid-cols-2">' + field("name", "Your name", "text", true) + field("school", "School / organisation", "text", true) +
+      field("designation", "Your designation", "text", false, "For example Principal, HR, Director") + field("email", "Email", "email", true) +
+      field("phone", "Phone / WhatsApp number", "tel", false, "Optional. Include country code.") + "</div>" +
+      choices("position", "Position you are considering me for", "checkbox", POSITIONS, true) +
+      choices("joining", "Expected joining time", "radio", JOINING, false) +
+      choices("contact", "Best way to contact you", "radio", CONTACT_VIA, true) +
+      '<div><label class="text-sm font-semibold" for="cf-message">Message</label><p class="text-xs text-muted">Location, salary range, subjects, anything you would like me to know.</p>' +
+      '<textarea id="cf-message" name="message" rows="4" class="' + INPUT + '"></textarea></div>' +
+      '<div class="hidden" aria-hidden="true"><label>Leave empty <input name="website" tabindex="-1" autocomplete="off"></label></div>' +
+      '<div class="flex flex-wrap items-center gap-3"><button type="submit" class="btn-primary">' + icon("mail") + "<span>Send message</span></button>" +
+      '<p id="contact-status" role="status" aria-live="polite" class="text-sm"></p></div></form></section>';
+  }
+  function submitContact(form) {
+    var f = P.availability.form, status = $("#contact-status"), btn = form.querySelector("button[type=submit]");
+    var say = function (m, bad) { status.textContent = m; status.className = "text-sm " + (bad ? "text-red-600 dark:text-red-400" : "font-semibold text-brand"); };
+    var E = form.elements;
+    if (E.website.value) return;                                   // honeypot
+    var missing = ["name", "school", "email"].filter(function (n) { return !E[n].value.trim(); });
+    if (missing.length) { E[missing[0]].focus(); say("Please fill in your name, school and email.", true); return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(E.email.value.trim())) { E.email.focus(); say("Please enter a valid email address.", true); return; }
+    if (!form.querySelector('input[name="position"]:checked')) { say("Please choose at least one position.", true); return; }
+    if (!form.querySelector('input[name="contact"]:checked')) { say("Please choose how I should contact you.", true); return; }
+    var body = new URLSearchParams();
+    Object.keys(f.entries).forEach(function (k) {
+      var key = "entry." + f.entries[k];
+      if (k === "position") form.querySelectorAll('input[name="position"]:checked').forEach(function (c) { body.append(key, c.value); });
+      else if (k === "joining" || k === "contact") { var c = form.querySelector('input[name="' + k + '"]:checked'); if (c) body.append(key, c.value); }
+      else if (E[k].value.trim()) body.append(key, E[k].value.trim());
+    });
+    body.append("fvv", "1"); body.append("pageHistory", "0");
+    btn.disabled = true; say("Sending...", false);
+    fetch(f.url, { method: "POST", mode: "no-cors", body: body }).then(function () {
+      form.reset();
+      say("Thank you. Your message has been sent and I will contact you soon.", false);
+    }, function () {
+      btn.disabled = false;
+      say("Could not send. Please email " + P.email + " instead.", true);
+    });
+  }
+  document.addEventListener("submit", function (e) {
+    if (e.target && e.target.id === "contact-form") { e.preventDefault(); submitContact(e.target); }
+  });
 
   /* ---------- page assembly ---------- */
   function currentUrl() {
@@ -397,7 +465,7 @@
     var html = r.sections.map(function (id) { return RENDER[id] ? RENDER[id]() : ""; });
     var present = r.sections.filter(function (id, i) { return html[i]; });
     $("#intro").innerHTML = renderIntro();
-    $("#sections").innerHTML = html.join("");
+    $("#sections").innerHTML = html.join("") + renderContactForm();
     $("#switcher-mobile").innerHTML = locked ? "" : renderSwitcher();
     $("#sidebar").innerHTML = renderSidebar();
     renderBar(present);
