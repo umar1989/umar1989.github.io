@@ -203,6 +203,11 @@ window.RESUME = {
             "example and exercise with answers, and a pen, timer and random student picker. Planned and tested by me, built with AI assistance.",
       link: "https://umar1989.github.io/physics/class-10/classroom/",
       roles: { tgt: 1, pgt: 1, foundation: 1, coordinator: 1, principal: 1 } },
+    { title: "Physics Notes for CBSE Class 9 and 10",
+      text: "Chapter-wise notes for all nine Class 9 and 10 Physics chapters: key concepts, every formula with its SI unit, solved numericals " +
+            "and a quick-revision list, with search and A4 printing. Each Class 10 chapter links to the interactive classroom above.",
+      link: "https://umar1989.github.io/physics/",
+      roles: { tgt: 2, pgt: 2, foundation: 2, coordinator: 2, principal: 2 } },
   ],
 
   /* ---------- Per-role configuration ----------
