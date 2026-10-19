@@ -27,6 +27,15 @@ function pick(list, role) {
 
 const ICON = { github: "\\faGithub", youtube: "\\faYoutube", instagram: "\\faInstagram", facebook: "\\faFacebook" };
 
+/* pdflatex cannot read WebP, so the PDF uses a JPEG or PNG of the same name (assets/image.jpeg for
+   assets/image.webp). With no such file the photo is left out of the PDF rather than failing the build. */
+function pdfPhoto(p) {
+  if (!p || !/\.webp$/i.test(p)) return p;
+  const alt = [".jpeg", ".jpg", ".png"].map(e => p.replace(/\.webp$/i, e)).find(q => fs.existsSync(path.join(root, q)));
+  return alt || "";
+}
+const PHOTO = pdfPhoto(P.photo);
+
 function build(role) {
   const r = R.roles[role];
   const bullets = pick(R.bullets, role);
@@ -50,7 +59,7 @@ function build(role) {
   groups = groups.filter(g => g.list.length);
   if (groups.length) {
     sec.skills = "\\section*{Skills}\n" + groups.map(g =>
-      `\\textbf{${tex(g.title)}}\\par\n\\begin{itemize}\n` +
+      `\\textbf{${tex(g.title)}}\\par\\nopagebreak\n\\begin{itemize}[beginpenalty=10000]\n` +   /* keep a group's heading with its first skill */
       g.list.map(x => `\\item \\textbf{${tex(x.name || x.item.name)}}: ${tex(x.item.desc)}`).join("\n") +
       "\n\\end{itemize}\n").join("");
   }
@@ -86,15 +95,15 @@ function build(role) {
 \titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{\MakeUppercase}[\vspace{-5pt}\textcolor{accent}{\rule{\linewidth}{0.6pt}}]
 \titlespacing*{\section}{0pt}{9pt}{5pt}
 \setlist[itemize]{leftmargin=1.2em,itemsep=1pt,topsep=2pt,parsep=0pt}
-\newcommand{\entry}[4]{\textbf{#1}\hfill #2\par {#3}\ifx\relax#4\relax\else\ $\cdot$\ #4\fi\par\vspace{1pt}}
+\newcommand{\entry}[4]{\textbf{#1}\hfill #2\par\nopagebreak {#3}\ifx\relax#4\relax\else\ $\cdot$\ #4\fi\par\vspace{1pt}}
 \begin{document}
-${P.photo ? String.raw`\noindent\begin{minipage}[t]{\dimexpr\linewidth-3cm\relax}` : ""}
+${PHOTO ? String.raw`\noindent\begin{minipage}[t]{\dimexpr\linewidth-3cm\relax}` : ""}
 {\Huge\bfseries ${tex(P.name)}}\par\vspace{2pt}
 {\large ${tex(r.headline)}}\par\vspace{4pt}
 \faEnvelope\ \href{mailto:${url(P.email)}}{${tex(P.email)}} \quad \faPhone\ ${tex(P.phone)} \quad \faMapMarker*\ ${tex(P.location)}\par
 ${socialTex}\par
-${P.photo ? String.raw`\end{minipage}\hfill\begin{minipage}[t]{2.6cm}\vspace{0pt}\raggedleft
-\begin{tikzpicture}\clip (0,0) circle (1.2cm);\node at (0,0) {\includegraphics[width=2.4cm]{${path.join(root, P.photo).replace(/\\/g, "/")}}};\end{tikzpicture}
+${PHOTO ? String.raw`\end{minipage}\hfill\begin{minipage}[t]{2.6cm}\vspace{0pt}\raggedleft
+\begin{tikzpicture}\clip (0,0) circle (1.2cm);\node at (0,0) {\includegraphics[width=2.4cm]{${path.join(root, PHOTO).replace(/\\/g, "/")}}};\end{tikzpicture}
 \end{minipage}` : ""}
 ${body}
 \end{document}

@@ -27,7 +27,7 @@ link in `availability.calendarUrl` (shows free slots without exposing event deta
 Everything is in **`data.js`** (commented). Fixed facts (name, contact, education, certifications, jobs, dates)
 are written once; bullets, skills, featured items and projects are in master lists, each with a
 `roles: { key: priority }` map (key missing = hidden for that role, 1 = first). Save and refresh. No rebuild needed.
-Projects are empty (none in the resume); add some and the card appears.
+Projects use the same `roles` map; the Projects card (web page and PDF) lists them, at present the interactive Class 10 Physics classroom.
 A profile photo: put it in `assets/` and set `profile.photo` in `data.js`.
 
 ## Add a role

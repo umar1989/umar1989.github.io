@@ -161,7 +161,7 @@ window.RESUME = {
       desc: "Uses AI for lesson and year/month plans, question papers and tests, explaining concepts and clearing doubts, and analysing results and progress.",
       roles: { tgt: 3, pgt: 3, foundation: 3, coordinator: 3, principal: 3 } },
     { id: "tech",      name: "Technology Integration",
-      desc: "Incorporates technology and digital resources into the classroom to enhance learning.",
+      desc: "Incorporates technology and digital resources into the classroom to enhance learning, such as an interactive NCERT Class 10 Physics website with 22 simulations.",
       roles: { tgt: 3, pgt: 3, coordinator: 3, principal: 3 } },
   ],
 
@@ -188,13 +188,22 @@ window.RESUME = {
     { id: "ncc",      title: "NCC A, B and C certified",
       text: "National Cadet Corps certifications at all three levels.",
       roles: { principal: 4 } },
+    { id: "classroom", title: "Interactive NCERT Physics classroom",
+      text: "A free website with 22 simulations that teaches NCERT Class 10 Physics section by section on the classroom projector (see Projects).",
+      roles: { tgt: 2 } },
   ],
 
   /* ---------- Projects ----------
-     Empty because the resume lists none. The Projects card is hidden
-     until you add some. Example:
-     { title: "...", text: "...", link: "https://...", roles: { pgt: 1, principal: 2 } } */
-  projects: [],
+     Shown in every role (web page and PDF). Added Oct 2026; not in resume.pdf.
+     Format: { title, text, link, roles: { key: priority } } */
+  projects: [
+    { title: "Interactive Class 10 Physics Classroom",
+      text: "A free website for teaching NCERT Class 10 Physics on the classroom projector. It follows the textbook section by section " +
+            "(43 sections on Light, the Human Eye, Electricity and Magnetic Effects) with 22 interactive simulations, every NCERT activity, " +
+            "example and exercise with answers, and a pen, timer and random student picker. Planned and tested by me, built with AI assistance.",
+      link: "https://umar1989.github.io/physics/class-10/classroom/",
+      roles: { tgt: 1, pgt: 1, foundation: 1, coordinator: 1, principal: 1 } },
+  ],
 
   /* ---------- Per-role configuration ----------
      To add a role: copy one block, give it a new key (the ?role= value).
@@ -241,10 +250,10 @@ window.RESUME = {
       headline: "Physics Teacher (TGT) · Classes 9-10 · CBSE · Practical, Concept-First Teaching",
       about:
         "Physics teacher working in CBSE schools since 2017, currently teaching classes 9 and 10. " +
-        "I teach through practical demonstrations and real-life applications so students understand the concept before the formula. " +
+        "I teach through practical demonstrations, real-life applications and interactive simulations, so students understand the concept before the formula. " +
         "Continuous assessment lets me track progress and support students who need extra help. " +
         "CTET qualified. M.Sc. Physics and B.Ed. Physical Science.",
-      sections: ["about", "featured", "experience", "skills", "education", "certifications", "projects"],
+      sections: ["about", "featured", "experience", "projects", "skills", "education", "certifications"],
       skillGroups: [
         { title: "Classroom teaching", ids: ["physics", "practical", "exam"] },
         { title: "Assessment & support", ids: ["assess", "remedial", "mentor"] },
